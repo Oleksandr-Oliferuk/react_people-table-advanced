@@ -1,11 +1,19 @@
 import { SearchLink } from './SearchLink';
 import cn from 'classnames';
 import { useSearchParams } from 'react-router-dom';
+import { getSearchWith } from '../utils/searchHelper';
 
 export const PeopleFilters = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const sex = searchParams.get('sex') || null;
   const centuries = searchParams.getAll('centuries') || [];
+  const query = searchParams.get('query') || '';
+
+  function setSearchWith(params: any) {
+    const search = getSearchWith(searchParams, params);
+
+    setSearchParams(search);
+  }
 
   return (
     <nav className="panel">
@@ -35,10 +43,16 @@ export const PeopleFilters = () => {
       <div className="panel-block">
         <p className="control has-icons-left">
           <input
+            value={query ?? ''}
             data-cy="NameFilter"
             type="search"
             className="input"
             placeholder="Search"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              const inputQuery = event.target.value;
+
+              setSearchWith({ query: inputQuery.length ? inputQuery : null });
+            }}
           />
 
           <span className="icon is-left">
@@ -79,13 +93,6 @@ export const PeopleFilters = () => {
             >
               All
             </SearchLink>
-            {/* <a
-              data-cy="centuryALL"
-              className="button is-success is-outlined"
-              href="#/people"
-            >
-              All
-            </a> */}
           </div>
         </div>
       </div>

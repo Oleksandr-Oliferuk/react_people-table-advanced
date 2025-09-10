@@ -1,5 +1,9 @@
 import { TableRow } from '../TableRow/TableRow';
 import { Person } from '../../types';
+import { SearchLink } from '../SearchLink';
+import cn from 'classnames';
+import { useSearchParams } from 'react-router-dom';
+import { SearchParams } from '../../utils/searchHelper';
 
 type Props = {
   people?: Person[];
@@ -7,6 +11,26 @@ type Props = {
 };
 
 export const Table: React.FC<Props> = ({ people, isLoading }) => {
+  const [searchParams] = useSearchParams();
+  const sort = searchParams.get('sort') || null;
+  const order = searchParams.get('order') || null;
+
+  const getPrepareSortParams = (
+    currentSort: string | null,
+    currentOrder: string | null,
+    field: string,
+  ): SearchParams => {
+    if (currentSort !== field) {
+      return { sort: field, order: null };
+    }
+
+    if (currentSort === field && currentOrder !== 'desc') {
+      return { sort: field, order: 'desc' };
+    }
+
+    return { sort: null, order: null };
+  };
+
   return (
     <>
       {!isLoading && (
@@ -19,42 +43,96 @@ export const Table: React.FC<Props> = ({ people, isLoading }) => {
               <th>
                 <span className="is-flex is-flex-wrap-nowrap">
                   Name
-                  <a href="#/people?sort=name">
+                  <SearchLink
+                    params={getPrepareSortParams(sort, order, 'name')}
+                  >
+                    {' '}
                     <span className="icon">
-                      <i className="fas fa-sort" />
+                      <i
+                        className={cn(
+                          'fas',
+                          {
+                            'fa-sort': sort !== 'name',
+                          },
+                          { 'fa-sort-up': sort === 'name' && order === null },
+                          {
+                            'fa-sort-down': sort === 'name' && order === 'desc',
+                          },
+                        )}
+                      />
                     </span>
-                  </a>
+                  </SearchLink>
                 </span>
               </th>
               <th>
                 <span className="is-flex is-flex-wrap-nowrap">
                   Sex
-                  <a href="#/people?sort=sex">
+                  <SearchLink params={getPrepareSortParams(sort, order, 'sex')}>
+                    {' '}
                     <span className="icon">
-                      <i className="fas fa-sort" />
+                      <i
+                        className={cn(
+                          'fas',
+                          {
+                            'fa-sort': sort !== 'sex',
+                          },
+                          { 'fa-sort-up': sort === 'sex' && order === null },
+                          {
+                            'fa-sort-down': sort === 'sex' && order === 'desc',
+                          },
+                        )}
+                      />
                     </span>
-                  </a>
+                  </SearchLink>
                 </span>
               </th>
               <th>
                 <span className="is-flex is-flex-wrap-nowrap">
                   Born
-                  <a href="#/people?sort=born&amp;order=desc">
+                  <SearchLink
+                    params={getPrepareSortParams(sort, order, 'born')}
+                  >
+                    {' '}
                     <span className="icon">
-                      <i className="fas fa-sort" />
+                      <i
+                        className={cn(
+                          'fas',
+                          {
+                            'fa-sort': sort !== 'born',
+                          },
+                          { 'fa-sort-up': sort === 'born' && order === null },
+                          {
+                            'fa-sort-down': sort === 'born' && order === 'desc',
+                          },
+                        )}
+                      />
                     </span>
-                  </a>
+                  </SearchLink>
                 </span>
               </th>
               <th>
                 {' '}
                 <span className="is-flex is-flex-wrap-nowrap">
                   Died
-                  <a href="#/people?sort=died">
+                  <SearchLink
+                    params={getPrepareSortParams(sort, order, 'died')}
+                  >
+                    {' '}
                     <span className="icon">
-                      <i className="fas fa-sort" />
+                      <i
+                        className={cn(
+                          'fas',
+                          {
+                            'fa-sort': sort !== 'died',
+                          },
+                          { 'fa-sort-up': sort === 'died' && order === null },
+                          {
+                            'fa-sort-down': sort === 'died' && order === 'desc',
+                          },
+                        )}
+                      />
                     </span>
-                  </a>
+                  </SearchLink>
                 </span>
               </th>
               <th>Mother</th>

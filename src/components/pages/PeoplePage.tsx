@@ -13,6 +13,7 @@ function getPreperedData(
   data: Person[],
   groupBySex: string | null,
   groupByCentury: string[],
+  searchQuery: string,
 ) {
   let copyData = [...data];
 
@@ -26,6 +27,17 @@ function getPreperedData(
     );
   }
 
+  if (searchQuery.length > 0) {
+    const normalizeQuery = searchQuery.toLowerCase().trim();
+
+    copyData = copyData.filter(
+      person =>
+        person.name.toLowerCase().includes(normalizeQuery) ||
+        person.motherName?.toLowerCase().includes(normalizeQuery) ||
+        person.fatherName?.toLowerCase().includes(normalizeQuery),
+    );
+  }
+
   return copyData;
 }
 
@@ -36,8 +48,14 @@ export const PeoplePage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const sex = searchParams.get('sex') || null;
   const centuries = searchParams.getAll('centuries') || [];
+  const query = searchParams.get('query') || '';
 
-  const visiblePeopleData = getPreperedData(dataFromServer, sex, centuries);
+  const visiblePeopleData = getPreperedData(
+    dataFromServer,
+    sex,
+    centuries,
+    query,
+  );
 
   useEffect(() => {
     setDataFromServer([]);
