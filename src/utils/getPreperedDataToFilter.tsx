@@ -27,8 +27,8 @@ export function getPreperedDataToFilter(
     copyData = copyData.filter(
       person =>
         person.name.toLowerCase().includes(normalizeQuery) ||
-        person.motherName?.toLowerCase().includes(normalizeQuery) ||
-        person.fatherName?.toLowerCase().includes(normalizeQuery),
+        (person.motherName || '').toLowerCase().includes(normalizeQuery) ||
+        (person.fatherName || '').toLowerCase().includes(normalizeQuery),
     );
   }
 

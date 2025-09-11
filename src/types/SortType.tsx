@@ -3,5 +3,4 @@ export enum SortType {
   sex = 'sex',
   born = 'born',
   died = 'died',
-  mother = 'mother',
 }
