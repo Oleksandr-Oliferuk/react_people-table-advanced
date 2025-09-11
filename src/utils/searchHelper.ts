@@ -25,7 +25,6 @@ export function getSearchWith(
   // - array of strings adds several params with the same key;
 
   Object.entries(paramsToUpdate).forEach(([key, value]) => {
-    console.log(paramsToUpdate);
     if (value === null) {
       newParams.delete(key);
     } else if (Array.isArray(value)) {
