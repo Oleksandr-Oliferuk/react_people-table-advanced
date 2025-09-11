@@ -51,41 +51,5 @@ export function getPreperedDataToFilter(
     });
   }
 
-  // if (sort && !order) {
-  //   copyData = copyData.sort((person1, person2) => {
-  //     switch (sort) {
-  //       case SortType.name:
-  //         return person1.name.localeCompare(person2.name);
-  //       case SortType.sex:
-  //         return person1.sex.localeCompare(person2.sex);
-  //       case SortType.born:
-  //         return person1.born - person2.born;
-  //       case SortType.died:
-  //         return person1.died - person2.died;
-
-  //       default:
-  //         return 0;
-  //     }
-  //   });
-  // }
-
-  // if (order && sort) {
-  //   copyData = copyData.sort((person1, person2) => {
-  //     switch (sort) {
-  //       case SortType.name:
-  //         return person2.name.localeCompare(person1.name);
-  //       case SortType.sex:
-  //         return person2.sex.localeCompare(person1.sex);
-  //       case SortType.born:
-  //         return person2.born - person1.born;
-  //       case SortType.died:
-  //         return person2.died - person1.died;
-
-  //       default:
-  //         return 0;
-  //     }
-  //   });
-  // }
-
   return copyData;
 }
