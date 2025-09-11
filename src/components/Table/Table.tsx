@@ -4,6 +4,7 @@ import { SearchLink } from '../SearchLink';
 import cn from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 import { SearchParams } from '../../utils/searchHelper';
+import { SortType } from '../../types/SortType';
 
 type Props = {
   people?: Person[];
@@ -44,18 +45,22 @@ export const Table: React.FC<Props> = ({ people, isLoading }) => {
                 <span className="is-flex is-flex-wrap-nowrap">
                   Name
                   <SearchLink
-                    params={getPrepareSortParams(sort, order, 'name')}
+                    params={getPrepareSortParams(sort, order, SortType.name)}
                   >
                     <span className="icon">
                       <i
                         className={cn(
                           'fas',
                           {
-                            'fa-sort': sort !== 'name',
+                            'fa-sort': sort !== SortType.name,
                           },
-                          { 'fa-sort-up': sort === 'name' && order === null },
                           {
-                            'fa-sort-down': sort === 'name' && order === 'desc',
+                            'fa-sort-up':
+                              sort === SortType.name && order === null,
+                          },
+                          {
+                            'fa-sort-down':
+                              sort === SortType.name && order === 'desc',
                           },
                         )}
                       />
@@ -66,17 +71,23 @@ export const Table: React.FC<Props> = ({ people, isLoading }) => {
               <th>
                 <span className="is-flex is-flex-wrap-nowrap">
                   Sex
-                  <SearchLink params={getPrepareSortParams(sort, order, 'sex')}>
+                  <SearchLink
+                    params={getPrepareSortParams(sort, order, SortType.sex)}
+                  >
                     <span className="icon">
                       <i
                         className={cn(
                           'fas',
                           {
-                            'fa-sort': sort !== 'sex',
+                            'fa-sort': sort !== SortType.sex,
                           },
-                          { 'fa-sort-up': sort === 'sex' && order === null },
                           {
-                            'fa-sort-down': sort === 'sex' && order === 'desc',
+                            'fa-sort-up':
+                              sort === SortType.sex && order === null,
+                          },
+                          {
+                            'fa-sort-down':
+                              sort === SortType.sex && order === 'desc',
                           },
                         )}
                       />
@@ -88,18 +99,22 @@ export const Table: React.FC<Props> = ({ people, isLoading }) => {
                 <span className="is-flex is-flex-wrap-nowrap">
                   Born
                   <SearchLink
-                    params={getPrepareSortParams(sort, order, 'born')}
+                    params={getPrepareSortParams(sort, order, SortType.born)}
                   >
                     <span className="icon">
                       <i
                         className={cn(
                           'fas',
                           {
-                            'fa-sort': sort !== 'born',
+                            'fa-sort': sort !== SortType.born,
                           },
-                          { 'fa-sort-up': sort === 'born' && order === null },
                           {
-                            'fa-sort-down': sort === 'born' && order === 'desc',
+                            'fa-sort-up':
+                              sort === SortType.born && order === null,
+                          },
+                          {
+                            'fa-sort-down':
+                              sort === SortType.born && order === 'desc',
                           },
                         )}
                       />
@@ -111,18 +126,22 @@ export const Table: React.FC<Props> = ({ people, isLoading }) => {
                 <span className="is-flex is-flex-wrap-nowrap">
                   Died
                   <SearchLink
-                    params={getPrepareSortParams(sort, order, 'died')}
+                    params={getPrepareSortParams(sort, order, SortType.died)}
                   >
                     <span className="icon">
                       <i
                         className={cn(
                           'fas',
                           {
-                            'fa-sort': sort !== 'died',
+                            'fa-sort': sort !== SortType.died,
                           },
-                          { 'fa-sort-up': sort === 'died' && order === null },
                           {
-                            'fa-sort-down': sort === 'died' && order === 'desc',
+                            'fa-sort-up':
+                              sort === SortType.died && order === null,
+                          },
+                          {
+                            'fa-sort-down':
+                              sort === SortType.died && order === 'desc',
                           },
                         )}
                       />
