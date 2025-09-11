@@ -8,38 +8,7 @@ import { getPeople } from '../../api';
 import { PeopleFilters } from '../PeopleFilters';
 
 import { useSearchParams } from 'react-router-dom';
-
-function getPreperedData(
-  data: Person[],
-  groupBySex: string | null,
-  groupByCentury: string[],
-  searchQuery: string,
-) {
-  let copyData = [...data];
-
-  if (groupBySex) {
-    copyData = copyData.filter(person => person.sex === groupBySex);
-  }
-
-  if (groupByCentury.length > 0) {
-    copyData = copyData.filter(person =>
-      groupByCentury.includes(Math.ceil(person.born / 100).toString()),
-    );
-  }
-
-  if (searchQuery.length > 0) {
-    const normalizeQuery = searchQuery.toLowerCase().trim();
-
-    copyData = copyData.filter(
-      person =>
-        person.name.toLowerCase().includes(normalizeQuery) ||
-        person.motherName?.toLowerCase().includes(normalizeQuery) ||
-        person.fatherName?.toLowerCase().includes(normalizeQuery),
-    );
-  }
-
-  return copyData;
-}
+import { getPreperedDataToFilter } from '../../utils/getPreperedDataToFilter';
 
 export const PeoplePage: React.FC = () => {
   const [dataFromServer, setDataFromServer] = useState<Person[]>([]);
@@ -49,12 +18,16 @@ export const PeoplePage: React.FC = () => {
   const sex = searchParams.get('sex') || null;
   const centuries = searchParams.getAll('centuries') || [];
   const query = searchParams.get('query') || '';
+  const sort = searchParams.get('sort') || null;
+  const order = searchParams.get('order') || null;
 
-  const visiblePeopleData = getPreperedData(
+  const visiblePeopleData = getPreperedDataToFilter(
     dataFromServer,
     sex,
     centuries,
     query,
+    sort,
+    order,
   );
 
   useEffect(() => {
@@ -66,7 +39,6 @@ export const PeoplePage: React.FC = () => {
         const peopleData = preparePeopleData(data);
 
         setDataFromServer(peopleData);
-        console.log(peopleData);
       })
       .catch(() => {
         setErrorMessage('Something went wrong');
@@ -103,7 +75,14 @@ export const PeoplePage: React.FC = () => {
           <div className="column">
             <div className="box table-container">
               <h1 className="title">People Page</h1>
-              <Table people={visiblePeopleData} isLoading={isLoading} />
+
+              {visiblePeopleData.length === 0 ? (
+                <p data-cy="noPeopleMessage">
+                  There are no people matching the current search criteria
+                </p>
+              ) : (
+                <Table people={visiblePeopleData} isLoading={isLoading} />
+              )}
             </div>
           </div>
         </div>

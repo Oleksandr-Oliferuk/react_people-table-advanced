@@ -46,7 +46,6 @@ export const Table: React.FC<Props> = ({ people, isLoading }) => {
                   <SearchLink
                     params={getPrepareSortParams(sort, order, 'name')}
                   >
-                    {' '}
                     <span className="icon">
                       <i
                         className={cn(
@@ -68,7 +67,6 @@ export const Table: React.FC<Props> = ({ people, isLoading }) => {
                 <span className="is-flex is-flex-wrap-nowrap">
                   Sex
                   <SearchLink params={getPrepareSortParams(sort, order, 'sex')}>
-                    {' '}
                     <span className="icon">
                       <i
                         className={cn(
@@ -92,7 +90,6 @@ export const Table: React.FC<Props> = ({ people, isLoading }) => {
                   <SearchLink
                     params={getPrepareSortParams(sort, order, 'born')}
                   >
-                    {' '}
                     <span className="icon">
                       <i
                         className={cn(
@@ -111,13 +108,11 @@ export const Table: React.FC<Props> = ({ people, isLoading }) => {
                 </span>
               </th>
               <th>
-                {' '}
                 <span className="is-flex is-flex-wrap-nowrap">
                   Died
                   <SearchLink
                     params={getPrepareSortParams(sort, order, 'died')}
                   >
-                    {' '}
                     <span className="icon">
                       <i
                         className={cn(

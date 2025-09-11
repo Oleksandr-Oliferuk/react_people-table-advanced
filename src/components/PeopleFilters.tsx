@@ -9,8 +9,10 @@ export const PeopleFilters = () => {
   const centuries = searchParams.getAll('centuries') || [];
   const query = searchParams.get('query') || '';
 
-  function setSearchWith(params: any) {
-    const search = getSearchWith(searchParams, params);
+  function setSearchWith(inputValue: string) {
+    const search = getSearchWith(searchParams, {
+      query: inputValue.length ? inputValue : null,
+    });
 
     setSearchParams(search);
   }
@@ -49,9 +51,7 @@ export const PeopleFilters = () => {
             className="input"
             placeholder="Search"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              const inputQuery = event.target.value;
-
-              setSearchWith({ query: inputQuery.length ? inputQuery : null });
+              setSearchWith(event.target.value);
             }}
           />
 
@@ -100,7 +100,7 @@ export const PeopleFilters = () => {
       <div className="panel-block">
         <SearchLink
           className="button is-link is-outlined is-fullwidth"
-          params={{ sex: null, centuries: null }}
+          params={{ sex: null, centuries: null, query: null }}
         >
           Reset all filters
         </SearchLink>
